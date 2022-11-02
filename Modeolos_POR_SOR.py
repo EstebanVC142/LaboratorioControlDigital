@@ -36,6 +36,7 @@ x0 = 40
 t = data[:, 0].T
 u = data[:, 1].T
 y = data[:, 2].T
+t_new = np.linspace(0,595,599)
 
 ucopy = u.copy()
 tcopy = t.copy()
@@ -67,7 +68,7 @@ yt2 = yt[-1] * 0.632
 A = np.array([[1, 1/3],[1, 1]])
 b = np.array([yt1, yt2])
 xP = np.linalg.inv(A) @ b 
-#print(x) # En x quedan arrojados los valores de tau y theta
+#print(x) # En xP quedan arrojados los valores de tau y theta
 
 # %% Construyendo el modelo de primer orden con retardo (POR)
 
@@ -81,7 +82,7 @@ if theta < 0:
 G = tf(K, [tau, 1])
 tdelay = np.arange(0, theta, Ts)
 
-yg, tg, xout = lsim(G, u, t)
+yg, tg, xout = lsim(G, u, t_new)
 yg += x0
 
 # Desplazamientos temporales del retardo
@@ -129,7 +130,7 @@ else:
     
 tdelayS = np.arange(0, thetaS, Ts)
 
-ygS, tgS, xout = lsim(GpS, u, t)
+ygS, tgS, xout = lsim(GpS, u, t_new)
 ygS += x0
 
 # Desplazamientos temporales del retardo
