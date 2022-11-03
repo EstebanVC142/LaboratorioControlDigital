@@ -31,7 +31,7 @@ plt.close('all')
 data  = np.loadtxt('data.txt', delimiter = ',', skiprows = 1)
 
 # Extrayendo los datos de las columnas 
-Ts = 1.00249528884
+Ts = 1
 x0 = 40
 t = data[:, 0].T
 u = data[:, 1].T
@@ -83,6 +83,7 @@ G = tf(K, [tau, 1])
 tdelay = np.arange(0, theta, Ts)
 
 yg, tg, xout = lsim(G, u, t_new)
+tg = np.append(tdelay, tg+theta)
 yg += x0
 
 # Desplazamientos temporales del retardo
