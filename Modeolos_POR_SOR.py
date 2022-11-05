@@ -28,7 +28,7 @@ def graficar(t,y,u,msg):
 
 plt.close('all')
 # Leyendo el archivo donde estan guardados los datos
-data  = np.loadtxt('data.txt', delimiter = ',', skiprows = 1)
+data  = np.loadtxt('Datos\data.txt', delimiter = ',', skiprows = 1)
 
 # Extrayendo los datos de las columnas 
 Ts = 1
@@ -72,9 +72,9 @@ xP = np.linalg.inv(A) @ b
 
 # %% Construyendo el modelo de primer orden con retardo (POR)
 
-K = 1.5
-tau = xP[0]
-theta = xP[1]
+K = 1.6
+theta = xP[0]
+tau = xP[1]
 
 if theta < 0:
     theta = 0
@@ -83,7 +83,6 @@ G = tf(K, [tau, 1])
 tdelay = np.arange(0, theta, Ts)
 
 yg, tg, xout = lsim(G, u, t_new)
-tg = np.append(tdelay, tg+theta)
 yg += x0
 
 # Desplazamientos temporales del retardo
@@ -149,10 +148,11 @@ graficar(t, y, u, 'Planta vs Modelos POR y SOR')
 plt.subplot(211)
 plt.plot(tgS, ygS, linewidth = 2, label = 'Modelo SOR')
 plt.legend(loc = 'best')
+'''
 plt.subplot(212)
 plt.plot(tg, yg, linewidth = 2, label = 'Modelo POR')
 plt.legend(loc = 'best')
-
+'''
 
 
 
