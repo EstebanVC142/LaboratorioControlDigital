@@ -10,6 +10,7 @@ import numpy as np
 from scipy import interpolate
 import matplotlib.pyplot as plt
 
+
 def graficar(t,y,u,msg):
     #Modifica el tamaño de los ejes
     plt.rcParams.update({'font.size':14})
@@ -38,9 +39,6 @@ u = data[:, 1].T
 y = data[:, 2].T
 t_new = np.linspace(0,595,599)
 
-ucopy = u.copy()
-tcopy = t.copy()
-
 graficar(t, y, u, 'TClab')
 
 # %%Recortar los datos
@@ -59,20 +57,40 @@ yt = yr - yr[0]
 tt = tr - tr[0]
 
 plt.figure()
-graficar(tt, yr, ut, 'Datos transladados y recortados')
+graficar(tt, yt, ut, 'Datos transladados y recortados')
 
 # %% calculando tau y theta 
-yt1 = yt[-1] * 0.283
-yt2 = yt[-1] * 0.632
+ytp1 = yt[-1] * 0.283
+ytp2 = yt[-1] * 0.632
+
+index = 0
+for i in range(len(yt)):
+    if (yt[i] > ytp1):
+        break
+    index = index + 1
+
+a = tt[index -2] - tt[index]
+b = yt[index -2] - yt[index]
+tp1 = tt[index] + ((a)/(b))*(ytp1 - yt[index])
+
+index = 0
+for i in range(len(yt)):
+    if (yt[i] > ytp2):
+        break
+    index = index + 1
+
+a = tt[index -2] - tt[index]
+b = yt[index -2] - yt[index]
+tp2 = tt[index] + ((a)/(b))*(ytp2 - yt[index])
 
 A = np.array([[1, 1/3],[1, 1]])
-b = np.array([yt1, yt2])
+b = np.array([tp1, tp2])
 xP = np.linalg.inv(A) @ b 
 #print(x) # En xP quedan arrojados los valores de tau y theta
 
 # %% Construyendo el modelo de primer orden con retardo (POR)
 
-K = 1.6
+K = yt[-1]/u[-1]
 theta = xP[0]
 tau = xP[1]
 
@@ -97,9 +115,40 @@ plt.legend(loc = 'best')
 
 # %% Calculando los parametros para el modelo de segundo orden (SOR)
 
-t1 = yt[-1] * 0.15
-t2 = yt[-1] * 0.45
-t3 = yt[-1] * 0.75
+yt1 = yt[-1] * 0.15
+yt2 = yt[-1] * 0.45
+yt3 = yt[-1] * 0.75
+
+index = 0
+for i in range(len(yt)):
+    if (yt[i] > yt1):
+        break
+    index = index + 1
+
+a = tt[index -1] - tt[index]
+b = yt[index -1] - yt[index]
+t1 = tt[index] + ((a)/(b))*(yt1 - yt[index])
+
+index = 0
+for i in range(len(yt)):
+    if (yt[i] > yt2):
+        break
+    index = index + 1
+
+a = tt[index -1] - tt[index]
+b = yt[index -1] - yt[index]
+t2 = tt[index] + ((a)/(b))*(yt2 - yt[index])
+
+index = 0
+for i in range(len(yt)):
+    if (yt[i] > yt3):
+        break
+    index = index + 1
+
+a = tt[index -2] - tt[index]
+b = yt[index -2] - yt[index]
+t3 = tt[index] + ((a)/(b))*(yt3 - yt[index])
+
 
 X = (t2 - t1)/(t3 - t1)
 
@@ -148,11 +197,11 @@ graficar(t, y, u, 'Planta vs Modelos POR y SOR')
 plt.subplot(211)
 plt.plot(tgS, ygS, linewidth = 2, label = 'Modelo SOR')
 plt.legend(loc = 'best')
-'''
-plt.subplot(212)
+
+plt.subplot(211)
 plt.plot(tg, yg, linewidth = 2, label = 'Modelo POR')
 plt.legend(loc = 'best')
-'''
+
 
 
 
