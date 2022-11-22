@@ -54,10 +54,9 @@ def objetive(p):
         j = j + ((((ym[i]) - 273.15) - xreal[i])/xreal[i])**2
     return j
     
-    
 
 #importar los datos
-data = np.loadtxt('data_teoria_modelo.txt', delimiter=',',skiprows=1)
+data = np.loadtxt('Datos\data_teoria_modelo.txt', delimiter=',',skiprows=1)
 t1 = data[:,0].T #Tomamos todas filas de la primera columna y transponemos a vector filas
 xreal = data[:,2].T  #Leemos los datos de la segunda columna.
 Q = data[:,1].T
