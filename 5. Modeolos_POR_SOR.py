@@ -16,7 +16,7 @@ def graficar(t,y,u,msg):
     plt.rcParams.update({'font.size':14})
     
     plt.subplot(211)
-    plt.plot(t, y, '-r', linewidth = 2)
+    plt.plot(t, y, 'r--', linewidth = 2,label = 'Datos reales')
     plt.grid()
     plt.ylabel('Output')
     plt.title(msg)
@@ -40,7 +40,6 @@ y = data[:, 2].T
 t_new = np.linspace(0,595,599)
 
 graficar(t, y, u, 'TClab')
-
 # %%Recortar los datos
 index = np.where(u > 0)
 st = index[0][0]
@@ -57,7 +56,7 @@ yt = yr - yr[0]
 tt = tr - tr[0]
 
 plt.figure()
-graficar(tt, yt, ut, 'Datos transladados y recortados')
+graficar(tt, yt, ur, 'Datos transladados y recortados')
 
 # %% calculando tau y theta 
 ytp1 = yt[-1] * 0.283
