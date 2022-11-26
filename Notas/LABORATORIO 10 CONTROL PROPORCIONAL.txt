@@ -1,0 +1,26 @@
+Laboratorio_10_Control_Proporcional
+
+se aplica una simulacion con un control porporcional al modelo matematico en tiempo discreto.
+
+
+luego de aplicar un escalon a 40°C, la ley de control se observa congruente con la respuesta de la planta.
+en el estado transitorio se puede aprecier, como el la ley de control aplicando el control proporcional 
+se acerca al Setpoint, con un sobre impulso lo cual ocaciona que la ley de control trate de compensar y acercarce el al punto de referencia,
+consecutivamente, oscila hasta llegar a el estado estable, teniendo un error considerable en basae a nuestro Setpoint. 
+
+
+ 
+
+
+//------------------------------Ingles---------------------------------------------------
+Lab_10_Proportional_Control
+
+a proportional control simulation is applied to the discrete time mathematical model.
+
+
+after applying a step at 40°C, the control law is observed to be congruent with the plant response.
+in the transient state, it can be seen how the control law applying proportional control 
+The control law is approaching the setpoint, with an over impulse which causes the control law to try to compensate and approach the setpoint,
+consecutively, it oscillates until it reaches the steady state, having a considerable error based on our Setpoint.
+
+Translated with www.DeepL.com/Translator (free version)

@@ -29,8 +29,8 @@ def sampling_band(sys):
     return ((ts_small + ts_big)/2)
 #Point 
 if __name__ == '__main__':
-    num = 8;
-    den = [1,10,0]
+    num = 1.84;
+    den = [115.6 ,1]
     sys = control.tf(num, den)
     ts = sampling_band(sys)
     print('ts -->', ts ,'segundos')

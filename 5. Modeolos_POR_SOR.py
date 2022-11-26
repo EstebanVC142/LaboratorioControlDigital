@@ -202,8 +202,13 @@ plt.subplot(211)
 plt.plot(tg, yg, linewidth = 2, label = 'Modelo POR')
 plt.legend(loc = 'best')
 
+print('='*40)
+print("Función de primer orden: ")
+print(G)
 
-
+print('='*40)
+print("Función de segundo orden: ")
+print(GpS)
 
         
 
