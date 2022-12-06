@@ -5,8 +5,6 @@ import matplotlib.pyplot as plt
 f= 10 #frecuencia de 10 Hz
 T = 1/f
 
-a=0
-
 G1 = tf(10,[1, 3, 10])
 print(G1)
 

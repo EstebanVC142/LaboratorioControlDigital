@@ -17,6 +17,7 @@ plt.figure(1)
 y, t = step(G)
 plt.plot(t, y)
 
+
 plt.figure(2)
 pzmap(G)
 
