@@ -11,23 +11,22 @@ Ceros Continuos: (No tiene)
 ========================================
 
 Polos Discretos: 
-Polo 1 = (0.7986+0j)
+Polo 1 = (0.7938+0j)
 Polo 2 = 0j
 ========================================
 Ceros Discretos: 
-Ceros 1 = (-26.824324324324323+0j)
+Ceros 1 = (-14.6293+0j)
 
 2. Podemos ver que el unico polo del sistema ubicado en sigma = -0.00865051 + 0j describe
 el tiempo de estabilización del mismo, es decir, (-1/-0.00865051) * 4 = 462.40 segundos,
 analizando con detenimiento la gráfica de respuesta de la planta podemos confirmar este
 tiempo y ver que efectivamente se estable alrededor de este valor; por otro lado el sistema
 es estable ya que el polo se encuentra en el semiplano negativo del plano S, ademas de una
-respuesta rapida ya que esta relativamente cerca del origen. 
-
-
+respuesta lenta ya que esta cerca del origen, asimismo vemos que el unico polo no tiene parte imaginaria
+lo que describe una dimanica sin oscilaciones ni sobreimpulso. 
 
 Hablando de los polos y ceros en tiempo discreto, podemos ver un cero en el semiplano negativo 
-lo cual nos dice ====, por otro lado tenemos un polo en el origen el cual no aporta nada a nuestro sistema,
-existe otro polo quien domina el sistema ubicado en 0.7986+0j, ambos polos al estar dentro la circunferencia
+lo cual nos aporta ganancia al sistema ademas de mostrarse como un retardo (d = 1), por otro lado tenemos un polo en el origen el cual no aporta nada,
+existe otro polo quien domina el  sistema ubicado en 0.7938+0j, ambos polos al estar dentro la circunferencia
 unitaria dan por sentado que nuestro sistema es estable y no tendrá dinamicas extrañas.
 
