@@ -2,9 +2,9 @@
 """
 Control Proporcional - TCLAB
 Función de Transferencia Continua:
-                1.84 exp(-25.1644019s)
+                1.80909 exp(-11.8264s)
     G(s) =  ----------------------
-                115.6s + 1
+                205.9033s + 1
                 
 Función de Transferencia Discreta:
                  0.01332 z + 0.3573
@@ -22,14 +22,17 @@ import sys
 #sys.path.append('../functions') 
 #import tclab_fun as fun  
 
-
+##.02428
 plt.close()
 # Función de Transferencia Discreta (Profesor)
-Ts   =  26                  #Periodo de Muestreo
-numz =  np.array([0.01332, 0.3573])   #Numerador
-denz =  np.array([1, -0.7986,0])        #Denominador
-d    =  4            #Retardo
+Ts   =  47                  #Periodo de Muestreo
+#umz =  np.array([0.01332, 0.3573])   #Numerador
+#denz =  np.array([1, -0.7986,0])        #Denominador
+numz =  np.array([0.02428, 0.3552])   #Numerador
+denz =  np.array([1, -0.7938])        #Denominador
+d    =  1           #Retardo
 denzd = np.hstack((denz, np.zeros(d)))
+print(denzd)
 Gz   =  tf(numz, denzd, Ts)
 print(Gz)
 
@@ -38,7 +41,7 @@ Ta = 23
 Tinit = 23
 
 #Crea los vectores
-tsim = 1000                #Tiempo de simulacion (segundos)
+tsim = 2000                #Tiempo de simulacion (segundos)
 nit = int(tsim/Ts)          #Numero de Iteraciones
 t = np.arange(0, (nit)*Ts, Ts)  #Tiempo
 u = np.zeros(nit)           #Vector de entrada (Heater)
