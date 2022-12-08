@@ -30,3 +30,12 @@ lo cual nos aporta ganancia al sistema ademas de mostrarse como un retardo (d = 
 existe otro polo quien domina el  sistema ubicado en 0.7938+0j, ambos polos al estar dentro la circunferencia
 unitaria dan por sentado que nuestro sistema es estable y no tendrá dinamicas extrañas.
 
+5. Al agregarle el retardo a la función de transferencia por medio del metodo Pade() de Python,
+lo que hacemos es agregarle un polo al sistema lo que conlleva a que tenga un par de polos complejos
+conjugados con lo que se evidencia que el sistema realimentado se vuelve inestable cuando la gananacia
+es mayor a 4.5, es decir se volverá oscilatorio; asimismo cabe aclarar no es posible ni coherente 
+tener una ganancia muy elevada porque esto traduciria tener una fuente de energia infita, cosa que
+no es posible tener.
+
+
+

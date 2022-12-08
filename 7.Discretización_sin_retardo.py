@@ -2,7 +2,7 @@ from control.matlab import *
 import numpy as np
 import matplotlib.pyplot as plt
 
-f= 10 #frecuencia de 10 Hz
+f = 10 #frecuencia de 10 Hz
 T = 1/f
 
 G1 = tf(10,[1, 3, 10])
