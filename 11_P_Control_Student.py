@@ -7,9 +7,9 @@ Función de Transferencia Continua:
                 205.9033s + 1
                 
 Función de Transferencia Discreta:
-                 0.01332 z + 0.3573
-G(z) = z^(-4) * ---------------------   Ts = 26.70049
-                    z^2 - 0.7986 z
+                 0.02428 z + 0.3552
+G(z) = z^(-1) * ---------------------   Ts = 26.70049
+                    z^2 - 0.7938 z
     
 @authors: Juan David , Esteban, Andres
 """
@@ -61,6 +61,7 @@ Kc = 2
 bias = 0
 kss = dcgain(Gz)  #Ganancia del sistema
 
+print(kss)
 
 #Lazo Cerrado de Control
 for k in range(nit):
