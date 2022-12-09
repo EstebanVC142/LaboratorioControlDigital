@@ -204,10 +204,12 @@ plt.legend(loc = 'best')
 print('='*40)
 print("Función de primer orden: ")
 print(G)
+print("El retardo es: ", theta)
 
 print('='*40)
 print("Función de segundo orden: ")
 print(GpS)
+print("El retardo es: ", thetaS)
 
         
 
