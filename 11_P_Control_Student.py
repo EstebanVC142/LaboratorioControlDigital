@@ -58,7 +58,7 @@ r[5:] = 40
 
 # Control Proporcional
 Kc = 2
-bias = 0
+bias = 6.4
 kss = dcgain(Gz)  #Ganancia del sistema
 
 print(kss)

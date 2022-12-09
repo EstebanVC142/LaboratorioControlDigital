@@ -17,12 +17,19 @@ import matplotlib.pyplot as plt
 from control.matlab import *
 import sys
 import tclab_cae.tclab_cae as tclab
+
 import time
+
 
 #Importar funciones modelo NO Lineal
 #sys.path.append('../functions') 
 #import tclab_fun as fun  
 
+def save_txt(t, u1, y1):
+    data = np.vstack( (t, u1, y1) ) #Vertical stack
+    data = data.T
+    top = 'Time (sec),  Heater (%),  Temperature (C)'
+    np.savetxt('data.txt', data, delimiter=',',header = top, comments='')
 
 def delay_time(sleep_max, prev_time):
     sleep = sleep_max - (time.time() - prev_time)
@@ -39,7 +46,7 @@ def delay_time(sleep_max, prev_time):
 plt.close()
 # Función de Transferencia Discreta (Profesor)
 Ts   =  47                  #Periodo de Muestreo
-numz =  np.array([0.02628, 0.3552])   #Numerador
+numz =  np.array([0.02428, 0.3552])   #Numerador
 denz =  np.array([1, -0.7938])        #Denominador
 d    =  1             #Retardo
 denzd = np.hstack((denz, np.zeros(d)))
@@ -61,9 +68,10 @@ Ta = lab.T1  #lab.T1
 Tinit = lab.T1
 
 #Crea los vectores
-tsim = 200                 #Tiempo de simulacion (segundos)
+tsim = 600                 #Tiempo de simulacion (segundos)
 nit = int(tsim/1)          #Numero de Iteraciones
 t = np.zeros(nit)          #Tiempo
+
 
 #Vectores del proceso Real
 u = np.zeros(nit)           #Vector de entrada (Heater)
@@ -81,11 +89,11 @@ es = np.zeros(nit)           #Vector de error
 #Setpoint
 r = np.zeros(nit)
 r[:] = Tinit
-r[Ts*2:] = 40
+r[Ts:] = 40
 
 # Control Proporcional
 Kc = 2
-bias = 0
+bias = 6.4
 kss = dcgain(Gz)  #Ganancia del sistema
 
 #Crear plot
@@ -95,7 +103,7 @@ plt.show()
 
 try:
     #Lazo Cerrado de Control
-    for k in range(nit)-1:
+    for k in range(nit-1):
         
         tm = delay_time(sleep_max, prev_time)
         prev_time = tm
@@ -115,9 +123,9 @@ try:
         #ys[k] = 0
         
         #Con el Modelo Lineal
-        if k > ts:
-            ts = np.arange(0,k+ts,ts)
-            Tlin, tlin, Xlin = lsim(Gz,us[0:k+ts:ts], ts)
+        if k > Ts:
+            ts = np.arange(0,k+Ts,Ts)
+            Tlin, tlin, Xlin = lsim(Gz,us[0:k+Ts:Ts], ts)
             ys[k] = Tlin[-1] + Tinit # agregamos condicion inicial
         
         #=====================================================#
@@ -178,14 +186,18 @@ try:
     lab.Q2(0)
     lab.LED(0)
     lab.close()
-
+    
+    plt.savefig('CP_response.png')
+    save_txt(tm[0:k], y[0:k], u[0:k])   
 # Allow user to end loop with Ctrl-C          
 except KeyboardInterrupt:
     # Disconnect from Arduino
     lab.Q1(0)
     print('Shutting down')
     lab.close()
-       
+    
+    plt.savefig('CP_response.png') 
+    save_txt(tm[0:k], y[0:k], u[0:k])   
 except:
     # Disconnect from Arduino
     lab.Q1(0)
@@ -193,5 +205,8 @@ except:
     lab.LED(0)
     lab.close()
     print('Shutting down')
+    
+    plt.savefig('CP_response.png') 
+    save_txt(tm[0:k], y[0:k], u[0:k])
     raise
 
