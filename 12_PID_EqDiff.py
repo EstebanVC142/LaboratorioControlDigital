@@ -79,8 +79,8 @@ if metodo == 1: #Ziegler-Nichols
         print(incontrolabilidad)
 if metodo == 2: #IAE Rovira
     if control == 2: #PI
-        kp=(1/K)*((0.758)*((theta/tau)**-0.861))
-        ti=tau/(1.02+((theta/tau)*-0.323))
+        kp=(1/K)*((0.758)*((theta/tau)**-0.861))*0.2
+        ti=tau/(1.02+((theta/tau)*-0.3232))
         td=0
         incontrolabilidad = theta / tau
         print(incontrolabilidad)
@@ -97,7 +97,7 @@ if metodo == 3: #IAET Roveri
         incontrolabilidad = theta / tau
         print(incontrolabilidad)
     else: #PID
-        kp=(1/K)*((0.586)*((theta/tau)**-0.916))
+        kp=(1/K)*((0.586)*((theta/tau)**-0.916))*0.2
         ti=(tau/(0.796+((theta/tau)*-0.147)))
         td=tau*(0.308*((tau/theta)**0.929))
         incontrolabilidad = theta / tau
@@ -118,7 +118,7 @@ if metodo == 4: #COHEN-COON
         print(incontrolabilidad)
 if metodo == 5: #Asignacion polos
     if control == 5: 
-        kp=0
+        kp=K
         ti=0
         td=0
         incontrolabilidad = theta / tau
