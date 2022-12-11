@@ -25,7 +25,7 @@ from menus import *
 
 
 plt.close()
-Ts   =  23                   #Periodo de Muestreo
+Ts   =  26                  #Periodo de Muestreo
 
 #Función de transferencia continua
 K = 1.80909
@@ -48,7 +48,7 @@ Ta = 28
 Tinit = 28
 
 #Crea los vectores
-tsim = 1000                 #Tiempo de simulacion (segundos)
+tsim = 2000                 #Tiempo de simulacion (segundos)
 nit = int(tsim/Ts)          #Numero de Iteraciones
 t = np.arange(0, (nit)*Ts, Ts)  #Tiempo
 u = np.zeros(nit)           #Vector de entrada (Heater)
@@ -66,39 +66,43 @@ r[5:] = 40
 # Control Proporcional
 if metodo == 1: #Ziegler-Nichols
     if control == 1: #PI
-        kp=(0.9*tau)/(K*theta)*0.5
+        kp=(0.9*tau)/(K*theta)*0.2
         ti=theta/0.3
         td=0
         incontrolabilidad = theta / tau
+        print(incontrolabilidad)
     else: #PID
-        kp=(1.2*tau)/(K*theta)
+        kp=(1.2*tau)/(K*theta)*0.2
         ti=2*theta
         td=0.5*theta
         incontrolabilidad = theta / tau
-
+        print(incontrolabilidad)
 if metodo == 2: #IAE
     if control == 2: #PI
-        kp=(1/K)*((0.984)*((theta/tau)**-0.986))
-        ti=tau/(0.608*(theta/tau)**-0.707)
+        kp=(1/K)*((0.758)*((theta/tau)**-0.861))
+        ti=tau/(1.02+((theta/tau)*-0.323))
         td=0
         incontrolabilidad = theta / tau
+        print(incontrolabilidad)
     else: #PID
-        kp=(1/K)*((1.435)*((theta/tau)**-0.921))
-        ti=tau/(0.878*(theta/tau)**-0.749)
-        td=tau*(0.482*(tau/theta)**1.137)
+        kp=(1/K)*((1.086)*((theta/tau)**-0.869))
+        ti=tau/(0.740+(theta/tau)*-0.130)
+        td=tau*(0.348*(tau/theta)**0.914)
         incontrolabilidad = theta / tau
-
+        print(incontrolabilidad)
 if metodo == 3: #IAET
     if control == 3: #PI
         kp=(1/K)*((0.984)*((theta/tau)**-0.986))
         ti=(tau/(0.608*(theta/tau)**-0.707))**2
         td=0
         incontrolabilidad = theta / tau
+        print(incontrolabilidad)
     else: #PID
         kp=(1/K)*((1.435)*((theta/tau)**-0.921))
         ti=(tau/(0.878*(theta/tau)**-0.749))**2
         td=tau*(0.482*(tau/theta)**1.137)
         incontrolabilidad = theta / tau
+        print(incontrolabilidad)
 
 if metodo == 4: #COHEN-COON
     if control == 4: 
@@ -106,23 +110,26 @@ if metodo == 4: #COHEN-COON
         ti=(theta*(0.9+0.083*theta/tau))/(1.27+0.6*theta/tau)
         td=0
         incontrolabilidad = theta / tau
+        print(incontrolabilidad)
     else: #PID
         kp=(1.35+0.25*theta/tau)*(tau/K*theta)
         ti=(theta*(1.35+0.25*theta/tau))/(0.54+0.33*theta/tau)
         td=(0.5*theta/(1.35+0.25*theta/tau))
         incontrolabilidad = theta / tau        
-
+        print(incontrolabilidad)
 if metodo == 5: #Asignacion polos
     if control == 5: 
         kp=0
         ti=0
         td=0
         incontrolabilidad = theta / tau
+        print(incontrolabilidad)
     else: #PID
         kp=0
         ti=0
         td=0
         incontrolabilidad = theta / tau  
+        print(incontrolabilidad)
 
 
 #Calculo do controle PID digital
