@@ -45,7 +45,7 @@ def delay_time(sleep_max, prev_time):
 
 plt.close()
 # Función de Transferencia Discreta
-Ts   =  47              #Periodo de Muestreo
+Ts   =  26              #Periodo de Muestreo
 numz =  np.array([0.02428, 0.3552])   #Numerador
 denz =  np.array([1, -0.7935])        #Denominador
 d    =  1                   #Retardo
@@ -241,7 +241,7 @@ try:
         plt.legend(['Setpoint', 'Simulation', 'Output'])
         plt.ylabel('Temperature (C)',fontsize=18)
         plt.xlabel('Time(s)',fontsize=18)
-        plt.title('Proportional Control',fontsize=24)
+        plt.title('PID Control',fontsize=24)
 
         plt.subplot(2,1,2)
         plt.step(t[0:k],us[0:k],'m--',\
