@@ -55,7 +55,7 @@ def objetive(p):
     return j
 
 #importar los datos
-data = np.loadtxt('D:/Esteban VC/Poli JIC/Semestres/2023-1/Control Analogo y Digital/LaboratorioControlDigital/2022-2/Datos/data_teoria_modelo.txt', delimiter=',',skiprows=1)
+data = np.loadtxt('D:/Esteban VC/Poli JIC/Semestres/2023-1/Control Analogo y Digital/LaboratorioControlDigital/2023-1/Datos/data_teoria_modelo.txt', delimiter=',',skiprows=1)
 t1 = data[:,0].T #Tomamos todas filas de la primera columna y transponemos a vector filas
 xreal = data[:,2].T  #Leemos los datos de la segunda columna.
 Q = data[:,1].T
@@ -84,6 +84,7 @@ print(solution.message)
 T = calc_post(t, p, x0)
 
 #Graficamos los resultados
+plt.figure(1, figsize=(10,7))
 plt.plot(t[0:n], T1[0:n]-273.15,'b:',label=r'$Temperature$ Initial guess', \
          linewidth = 2)
 plt.plot(t[0:n], T[0:n]-273.15,'r:',label=r'$Temperature$ Final guess', \
@@ -91,6 +92,7 @@ plt.plot(t[0:n], T[0:n]-273.15,'r:',label=r'$Temperature$ Final guess', \
 plt.plot(t, xreal,'y-',label=r'$Temperature$ from data', \
          linewidth = 2)
 plt.legend(loc='best')
-plt.ylabel('Temperature (°C)', fontsize=14)
-plt.xlabel('Time (s)', fontsize=14)
+plt.title('TCLAB EDO optimization', fontsize=18)
+plt.ylabel('Temperature [°C]', fontsize=14)
+plt.xlabel('Time [s]', fontsize=14)
 plt.grid()

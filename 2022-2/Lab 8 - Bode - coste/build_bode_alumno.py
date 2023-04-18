@@ -28,7 +28,6 @@ pha = [0, -0.1,-0.779999999999994,-1.5000000000000036, -2.000000000000046]
 magdB = list(map(lambda i: 20*np.log10(i), mag))
 phad = list(map(lambda i: np.rad2deg(i), pha))
 
-
 plt.figure(1)
 plt.title('Diagrama de Bode')
 bode(G)

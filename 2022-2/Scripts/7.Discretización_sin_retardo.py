@@ -16,7 +16,6 @@ G1_D = c2d(G1, T, 'zoh')
 G2_D = c2d(G1, T, 'foh')
 G3_D = c2d(G1, T, 'tustin')
 
-
 #Estimulamos la ftp para ver la dinamica del sistema
 y, t = step(G1)
 yd1, tD1 = step(G1_D)

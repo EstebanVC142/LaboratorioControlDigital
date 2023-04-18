@@ -29,15 +29,15 @@ def graficar(t,y,u,msg):
 
 plt.close('all')
 # Leyendo el archivo donde estan guardados los datos
-data  = np.loadtxt('D:/Esteban VC/Poli JIC/Semestres/2023-1/Control Analogo y Digital/LaboratorioControlDigital/Datos/data.txt', delimiter = ',', skiprows = 1)
+data  = np.loadtxt('D:/Esteban VC/Poli JIC/Semestres/2023-1/Control Analogo y Digital/LaboratorioControlDigital/2023-1/Scripts/Laboratorio 3 Respuesta al escalon TCLAB/RespuestaAlEscalonTCLAB.txt', delimiter = ',', skiprows = 1)
 
 # Extrayendo los datos de las columnas 
 Ts = 1
 x0 = 40
 t = data[:, 0].T
-u = data[:, 1].T
-y = data[:, 2].T
-t_new = np.linspace(0,595,599)
+u = data[:, 2].T
+y = data[:, 4].T
+t_new = np.linspace(0, len(t), len(t))
 
 graficar(t, y, u, 'TClab')
 # %%Recortar los datos

@@ -8,7 +8,7 @@ from scipy.interpolate import interp1d
 # Columna 0 = tiempo (t)
 # Columna 1 = Entrada (u - Heater)
 # Columna 2 = Salida (yp - Temperatura)
-data = np.loadtxt('data_PRBS_30.txt',delimiter=',',skiprows=1)
+data = np.loadtxt('D:/Esteban VC/Poli JIC/Semestres/2023-1/Control Analogo y Digital/LaboratorioControlDigital/2023-1/Scripts/Laboratorio 5 PBRS/Lab 7 - PRBS - Discretizacion/prbsResponse.txt',delimiter=',',skiprows=1)
 
 # Entrada y Salida Inicial
 u0 = data[0,1]
@@ -47,8 +47,8 @@ def fopdt(y,t,uf,Km,taum,thetam):
     # yp0 condiciones iniciales de los datos
     return dydt
 
-# Simulación del sistema de promer orden con x=[Km,taum,thetam]
-def sim_model(x):
+# Simulación del sistema de primer orden con x=[Km,taum,thetam]
+def SimulacionModelo(x):
     # Argumentos de entrada
     Km = x[0]
     taum = x[1]
@@ -75,11 +75,11 @@ def objective(x):
     # Calcula el costo
     obj = 0.0
     #Simular el modelo
-    ym = sim_model(x)
+    ym = SimulacionModelo(x)
     #ym = modelo
     #yp = planta
     for i in range(len(ym)): #Hasta el tamaño de ym
-        obj = obj + (ym[i] - yp[i])**2
+        obj += (ym[i] - yp[i])**2
         
     return obj
 
@@ -96,22 +96,19 @@ x0[2] = theta # thetam
 print(f'costo inicial {objective(x0)}')
 
 # Metodo de optimización por minimos cuadrados
-# Varia los 3 parametros para que acerce al comportamiento
-# real.
+# Varia los 3 parametros para que acerce al comportamiento real.
 solucion = minimize(objective, x0)
 x = solucion.x #Guardo mis 3 parametros ya optimizados
 
-
-
 print(f'costo final {objective(x)}')
-print('kp:' + str(x[0]))
-print('tau:' + str(x[1]))
-print('theta:' + str(x[2]))
+print('kp: ' + str(x[0]))
+print('tau: ' + str(x[1]))
+print('theta: ' + str(x[2]))
 
 #Simulación del modelo con los 3 parametros iniciales
-ym1 = sim_model(x0) 
+ym1 = SimulacionModelo(x0) 
 #Simulación del modelo con los 3 parametros Finales
-ym2 = sim_model(x)
+ym2 = SimulacionModelo(x)
 
 plt.figure()
 plt.plot(t, yp, 'b', linewidth=2, label=' Datos proceso')
