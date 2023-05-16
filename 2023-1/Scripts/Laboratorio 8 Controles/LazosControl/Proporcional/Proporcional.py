@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+
 """
 Control Proporcional - TCLAB
 Función de Transferencia Continua:
@@ -7,46 +7,37 @@ Función de Transferencia Continua:
                 205.9033s + 1
                 
 Función de Transferencia Discreta:
-                 0.02428 z + 0.3552
-G(z) = z^(-1) * ---------------------   Ts = 26.70049
-                    z^2 - 0.7938 z
-    
-@authors: Juan David , Esteban, Andres
+                 0.2895 z + 0.08482
+G(z) = z^(-1) * ---------------------   Ts = 47
+                    z - 0.7931
 """
 import numpy as np
 import matplotlib.pyplot as plt
 from control.matlab import *
-import sys
+#Importar funciones modelo NO Lineal (Elaborados por el grupo)
+import Funtions as labtool  
 
-#Importar funciones modelo NO Lineal
-#sys.path.append('../functions') 
-#import tclab_fun as fun  
-
-##.02428
 plt.close()
-# Función de Transferencia Discreta (Profesor)
+# Función de Transferencia Discreta
 Ts   =  47                  #Periodo de Muestreo
-#umz =  np.array([0.01332, 0.3573])   #Numerador
-#denz =  np.array([1, -0.7986,0])        #Denominador
-numz =  np.array([0.02428, 0.3552])   #Numerador
-denz =  np.array([1, -0.7938])        #Denominador
-d    =  1           #Retardo
+numz =  np.array([0.2895, 0.08482])   #Numerador
+denz =  np.array([1, -0.7931])        #Denominador
+d    =  1                   #Retardo
 denzd = np.hstack((denz, np.zeros(d)))
-print(denzd)
 Gz   =  tf(numz, denzd, Ts)
 print(Gz)
 
 # Parametros del Modelo No Lineal
-Ta = 23
-Tinit = 23
+Ta = 27
+Tinit = 27
 
 #Crea los vectores
-tsim = 2000                #Tiempo de simulacion (segundos)
+tsim = 1100               #Tiempo de simulacion (segundos)
 nit = int(tsim/Ts)          #Numero de Iteraciones
 t = np.arange(0, (nit)*Ts, Ts)  #Tiempo
 u = np.zeros(nit)           #Vector de entrada (Heater)
 y = np.zeros(nit)           #Vector de salida  (Temperatura)
-y[:] = Tinit
+y[:] = Tinit                #Inicializa el vector con Tinit
 e = np.zeros(nit)           #Vector de error
 q = np.zeros(nit)           #Vector de disturbio
 q[40:] = 2
@@ -54,48 +45,44 @@ q[40:] = 2
 #Setpoint
 r = np.zeros(nit)
 r[:] = Tinit
-r[5:] = 40
+r[4:] = 40
 
 # Control Proporcional
-Kc = 2
-bias = 6.4
+Kc = 1.8
+bias = 0
 kss = dcgain(Gz)  #Ganancia del sistema
-
-print(kss)
+print(f'kss={kss}')
 
 #Lazo Cerrado de Control
 for k in range(nit):
-    
     #=====================================================#
     #============    SIMULAR EL PROCESO REAL  ============#
     #=====================================================#
     
     #Con el Modelo NO LINEAL
-    #y[k] = 0
-    
-    #Con el Modelo Lineal
     if k > 1:
-        Tlin, tlin, Xlin = lsim(Gz,u[0:k+1] - q[0:k+1], t[0:k+1])
-        y[k] = Tlin[-1] + Tinit # agregamos condicion inicial
-
+        
+        T1 = labtool.temperature_tclab(t[0:k+1], u[0:k+1] - q[0:k+1], [Ta], Tinit)
+        y[k] = T1[-1]       
+     
     #=====================================================#
     #============       CALCULAR EL ERROR     ============#
     #=====================================================#
-    e[k]= r[k] - y[k]
+    
+    e[k] = r[k] - y[k]
     
     #=====================================================#
     #===========   CALCULAR LA LEY DE CONTROL  ===========#
     #=====================================================#
-    #bias = (y[k] - y[0]) /kss
-    u[k] = Kc * e[k] + bias
-    
-    #saturamos la salida
+    bias = (y[k] - y[0])/kss
+
+    u[k] = Kc*e[k] + bias
+
+    #satiracion
     if u[k] > 100:
-        u[k] = 100
+        u[k]  = 100
     elif u[k] < 0:
-        u[k] = 0
-    #Agrega el disturbioo de entrada
-    u[k] = u[k] - q [k]  
+         u[k] = 0      
 
 plt.figure()
 plt.subplot(2,1,1)
@@ -111,5 +98,5 @@ plt.legend(['Heater'])
 plt.ylabel('Power (%)',fontsize=18)
 plt.xlabel('Time(s)',fontsize=18)
 plt.show()
-
-
+labtool.save_txt(t, u, y, r,"SimulacionProporcional")
+plt.savefig("Proportional Control.png")
