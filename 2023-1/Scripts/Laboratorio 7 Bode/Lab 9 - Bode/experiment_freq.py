@@ -14,7 +14,7 @@ plt.close()
 
 # Creamos una función de transferencia
 # que representa mi sistema o mi máquina real
-G = tf(10, [1, 1])
+G = tf(1, [1, 1])
 print(G)
 
 # La entrada de estimulo siempre es senoidal

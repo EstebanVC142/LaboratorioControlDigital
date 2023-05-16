@@ -4,6 +4,7 @@ from scipy.integrate import solve_ivp
 from scipy.optimize import minimize
 from scipy.interpolate import interp1d
 
+
 # Ecuación Diferencial de Primer Orden con Retardo    
 def Fopdt(t,y,uf,Km,taum,thetam):
     # argumentos
@@ -64,7 +65,7 @@ def objective(x):
 # Columna 1 = Entrada (u - Heater)
 # Columna 2 = Salida (yp - Temperatura)
 
-data = np.loadtxt('D:/Esteban VC/Poli JIC/Semestres/2023-1/Control Analogo y Digital/LaboratorioControlDigital/2023-1/Scripts/Laboratorio 5 PBRS/ResultadosOptimizacionPBRS/prbsResponse_25.txt',delimiter=',',skiprows=1)
+data = np.loadtxt('D:/Esteban VC/Poli JIC/Semestres/2023-1/Control Analogo y Digital/LaboratorioControlDigital/2023-1/Scripts/Laboratorio 5 PBRS/Lab 7 - PRBS - Discretizacion/prbsResponse_25.txt',delimiter=',',skiprows=1)
 
 # Entrada y Salida Inicial
 u0 = data[0,1]

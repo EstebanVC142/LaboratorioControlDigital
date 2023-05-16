@@ -10,10 +10,10 @@ from control.matlab import *
 from controlcae import *
 
 plt.close()
-# G = tf(0.33427372912516046, [24.001052490258118, 1]) # Modelo obtenido por optimización
+# G = tf(0.33427372912516046, [24.001052490258118, 1])
 # G = tf(1.84, [115.6, 1]) # Modelo por curva de reacción
 G = tf([0.2428, 0.3552], [1, 0.7938, 0], dt = 26.7) # Modelo de curva de reaccion discretizado 
-k = 1
+k = 10
 cG = series(k, G)
 bode(cG)
 

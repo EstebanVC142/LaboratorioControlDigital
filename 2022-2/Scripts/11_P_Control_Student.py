@@ -95,7 +95,9 @@ for k in range(nit):
     elif u[k] < 0:
         u[k] = 0
     #Agrega el disturbioo de entrada
-    u[k] = u[k] - q [k]  
+    u[k] = u[k] - q [k]
+    
+
 
 plt.figure()
 plt.subplot(2,1,1)
