@@ -64,8 +64,8 @@ sleep_max = 1.0
 #===========================================================#
 
 # Parametros del Modelo No Lineal
-Ta = lab.T1  #lab.T1
-Tinit = lab.T1
+Ta = lab.T2  - 15 #lab.T1
+Tinit = lab.T3 - 15
 
 #Crea los vectores
 tsim = 600                 #Tiempo de simulacion (segundos)
@@ -112,7 +112,7 @@ try:
         #=====================================================#
         #============         PROCESO REAL        ============#
         #=====================================================#
-        y[k] = lab.T1
+        y[k] = lab.T3 - 15
         
         #=====================================================#
         #============    SIMULAR EL PROCESO REAL  ============#
@@ -137,9 +137,7 @@ try:
         #=====================================================#
         #===========   CALCULAR LA LEY DE CONTROL  ===========#
         #=====================================================#
-        #bias = (y[k] - y[0]) /kss
-       
-
+        #bias = (y[k] - y[0]) /kss     
 
         if t[k]%Ts == 0:
             u[k] = Kc * e[k] + bias
@@ -161,7 +159,7 @@ try:
             us[k] =0
             
         #Mandar la Señal a la Planta
-        lab.Q1(u[k])
+        lab.Q2(u[k])
         
         #Graficar
         plt.subplot(2,1,1)
@@ -188,7 +186,7 @@ try:
     lab.close()
     
     plt.savefig('CP_response.png')
-    save_txt(tm[0:k], y[0:k], u[0:k])   
+    # save_txt(tm[0:k], y[0:k], u[0:k])   
 # Allow user to end loop with Ctrl-C          
 except KeyboardInterrupt:
     # Disconnect from Arduino
@@ -197,7 +195,7 @@ except KeyboardInterrupt:
     lab.close()
     
     plt.savefig('CP_response.png') 
-    save_txt(tm[0:k], y[0:k], u[0:k])   
+    # save_txt(tm[0:k], y[0:k], u[0:k])   
 except:
     # Disconnect from Arduino
     lab.Q1(0)
@@ -207,6 +205,6 @@ except:
     print('Shutting down')
     
     plt.savefig('CP_response.png') 
-    save_txt(tm[0:k], y[0:k], u[0:k])
+    # save_txt(tm[0:k], y[0:k], u[0:k])
     raise
 

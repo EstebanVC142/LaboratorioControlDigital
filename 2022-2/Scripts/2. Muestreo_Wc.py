@@ -31,10 +31,11 @@ def sampling_band(sys):
 print(__name__)
 
 if __name__ == '__main__':
-    num = 0.1428;
-    den = [1, 3.57, 2.85]
+    num = [1.84];
+    den = [115.6, 1]
     sys = control.tf(num, den)
     ts = sampling_band(sys)
+    print(sys)
     print('ts -->', ts ,'segundos')
     
     
