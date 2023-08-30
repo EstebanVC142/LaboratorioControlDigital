@@ -29,7 +29,7 @@ def EDO_TCLAB(x, t, Q, p):
     return dTdt
 
 #calculo del modelo
-def calc_post(t, p, xo):
+def calc_temp(t, p, xo):
     y0 = x0
     # Inicializamos todo el vector con uno
     # que tiene la misma longuitud del tiempo 
@@ -42,12 +42,11 @@ def calc_post(t, p, xo):
         ym[i+1] = y0[0]
     return ym
         
-        
 #Define objetive
 #llamamos el integrador para que la función resuelva conforme a los parametros ingresados
 def objetive(p):
     #simulate model
-    ym = calc_post(t, p, x0)
+    ym = calc_temp(t, p, x0)
     # calculate objetive
     j=0.0
     for i in range(len(t1)-1):
@@ -63,14 +62,14 @@ Q = data[:,1].T
 #Condición inicial
 x0 = 300
 n = 599 #Nimber of second time points
-alpha = 0.014
-U = 5
+alpha = 0.014 # Factor del Calentador
+U = 5  # Coeficiente de transferencia de calor
 p0 = [U, alpha]
 
 #Tiempo de integración
 t = np.linspace(0, n-1,n) #Time vector
 
-T1 = calc_post(t, p0, x0)
+T1 = calc_temp(t, p0, x0)
 
 #costo inicial
 print(f'initial SSE objetive: {objetive(p0)}')
@@ -81,10 +80,10 @@ p = solution.x
 print(f'Final SSE objetive: {objetive(p)}')
 print(solution.message)
 
-T = calc_post(t, p, x0)
+T = calc_temp(t, p, x0)
 
 #Graficamos los resultados
-plt.figure(1, figsize=(10,7))
+plt.figure(30, figsize=(10,7))
 plt.plot(t[0:n], T1[0:n]-273.15,'b:',label=r'$Temperature$ Initial guess', \
          linewidth = 2)
 plt.plot(t[0:n], T[0:n]-273.15,'r:',label=r'$Temperature$ Final guess', \

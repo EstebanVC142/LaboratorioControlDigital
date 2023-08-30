@@ -12,17 +12,24 @@ from controlcae import *
 plt.close()
 # G = tf(0.33427372912516046, [24.001052490258118, 1]) # Modelo obtenido por optimización
 # G = tf(1.84, [115.6, 1]) # Modelo por curva de reacción
-G = tf([0.2428, 0.3552], [1, 0.7938, 0], dt = 26.7) # Modelo de curva de reaccion discretizado 
+G = tf([1.84], [115.6, 1]) # Modelo de curva de reaccion continuo 
+G2 = tf([0.2428, 0.3552], [1, 0.7938, 0], dt = 26.7) # Modelo de curva de reaccion discretizado 
 k = 1
 cG = series(k, G)
-bode(cG)
+# plt.figure(1)
+# plt.title('Tiempo Continuo')
+# bode(cG)
+# plt.figure(2)
+# plt.title('Tiempo Discreto')
+# bode(series(k, G2))
 
 # Analisis de Estabilidad
-gm, pm, Wcg, Wcp = margin(cG)
+# gm, pm, Wcg, Wcp = margin(cG)
 
 print(G)
-# gm, pm, Wcg, Wcp = margin_plot(cG)
+print(G2)
+gm, pm, Wcg, Wcp = margin_plot(cG)
 print('Margen de Ganancia:', 20*np.log10(gm))
-print('Margen de Fase:', 20*np.log10(pm))
+print('Margen de Fase:', pm)
 print('Frecuencia de Cruce de Fase:', Wcg)
 print('Frecuencia de Cruce de Ganancia:', Wcp)
